@@ -1,0 +1,11 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}New Typevehicule{% endblock %}
+
+{% block body %}
+    <h1>Create new Typevehicule</h1>
+
+    {{ include('typevehicule/_form.html.twig') }}
+
+    <a href="{{ path('app_typevehicule_index') }}">back to list</a>
+{% endblock %}

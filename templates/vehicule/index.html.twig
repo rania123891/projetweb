@@ -1,0 +1,77 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}Vehicule index{% endblock %}
+
+
+
+
+
+{% block body %}
+<section class="shopping-cart-area ptb-100">
+    <div class="container">
+        <form class="cart-controller">
+            <div class="cart-table table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">Immatriculation</th>
+                        <th scope="col">Marque</th>
+                        <th scope="col">Puissance</th>
+                        <th scope="col">Nbrdeplace</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+
+
+
+                    {% for vehicule in vehicules  %}
+
+                    <tr>
+                        <td class="trash">
+                         {{ vehicule.immatriculation}}
+                        </td>
+
+                        <td>{{ vehicule.marque }}</td>
+                        <td >
+                            {{ vehicule.puissance}}
+
+                        </td>
+
+                        <td>
+                            {{ vehicule.nbrdeplace }}
+                        </td>
+
+
+                        <td class="product-price">
+                            {{ vehicule.prix }}
+                        </td>
+
+
+
+                        <td>
+
+                            <a href="{{ path('app_vehicule_show', {'immatriculation': vehicule.immatriculation}) }}">show</a>
+                            <a href="{{ path('app_vehicule_edit', {'immatriculation': vehicule.immatriculation}) }}">edit</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+
+
+
+
+
+                    </tbody>
+                </table>
+            </div>
+            </form>
+    </div>
+</section>
+{% endblock %}
