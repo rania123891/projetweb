@@ -34,9 +34,11 @@
         </tbody>
     </table>
 
-    <a href="{{ path('app_vehicule_index') }}">back to list</a>
-
-    <a href="{{ path('app_vehicule_edit', {'immatriculation': vehicule.immatriculation}) }}">edit</a>
+<div class="row justify-content-around">
+ <a class="btn btn-primary" href="{{ path('app_vehicule_edit', {'immatriculation': vehicule.immatriculation}) }}">edit</a>
 
     {{ include('vehicule/_delete_form.html.twig') }}
+ <a class="btn btn-secondary" href="{{ path('app_vehicule_index') }}">back to list</a>
+
+</div>
 {% endblock %}

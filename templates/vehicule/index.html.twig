@@ -7,9 +7,17 @@
 
 
 {% block body %}
-<section class="shopping-cart-area ptb-100">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <section class="shopping-cart-area ptb-100">
     <div class="container">
-        <form class="cart-controller">
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+            </div>
+            <input type="text" class="form-control" placeholder="Search" id="search-input">
+        </div>
+        <div class="cart-controller">
             <div class="cart-table table-responsive">
                 <table class="table table-bordered">
                     <thead>
@@ -54,8 +62,8 @@
 
                         <td>
 
-                            <a href="{{ path('app_vehicule_show', {'immatriculation': vehicule.immatriculation}) }}">show</a>
-                            <a href="{{ path('app_vehicule_edit', {'immatriculation': vehicule.immatriculation}) }}">edit</a>
+                            <a class="btn btn-primary" href="{{ path('app_vehicule_show', {'immatriculation': vehicule.immatriculation}) }}">show</a>
+                            <a  class="btn btn-outline-primary" href="{{ path('app_vehicule_edit', {'immatriculation': vehicule.immatriculation}) }}">edit</a>
                         </td>
                     </tr>
                     {% else %}
@@ -71,7 +79,46 @@
                     </tbody>
                 </table>
             </div>
-            </form>
+            </div>
     </div>
 </section>
+
+{% endblock %}
+{% block js %}
+
+<script>
+    $(document).ready(function() {
+        $('#search-input').on('input', function() {
+            var searchValue = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: "{{ path('app_vehicule_recherche') }}",
+                data: {'searchValue': searchValue},
+                success: function(response) {
+                    var tbody = $('tbody');
+                    tbody.empty(); // clear previous results
+                    if (response.length > 0) {
+                        $.each(response, function(i, vehicule) {
+                            var tr = $('<tr>');
+                            tr.append($('<td>').text(vehicule.immatriculation));
+                            tr.append($('<td>').text(vehicule.marque));
+                            tr.append($('<td>').text(vehicule.puissance));
+                            tr.append($('<td>').text(vehicule.nbrdeplace));
+                            tr.append($('<td>').text(vehicule.prix));
+                            var actions = $('<td>');
+                            tr.append(actions);
+                            tbody.append(tr);
+                        });
+                    } else {
+                        tbody.append($('<tr>').append($('<td>').attr('colspan', 6).text('no records found')));
+                    }
+                },
+                error: function(response) {
+                    console.log(response);
+                }
+            });
+        });
+    });
+
+</script>
 {% endblock %}

@@ -12,8 +12,16 @@ class TypevehiculeType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('nom')
-            ->add('description')
+            ->add('nom', null, [
+                'label' => 'Nom',
+                'label_attr' => ['class' => 'col-sm-2 col-form-label'],
+                'attr' => ['class' => 'form-control'],
+            ])
+            ->add('description', null, [
+                'label' => 'Description',
+                'label_attr' => ['class' => 'col-sm-2 col-form-label'],
+                'attr' => ['class' => 'form-control'],
+            ])
         ;
     }
 

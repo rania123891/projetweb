@@ -1,28 +1,95 @@
 {% extends 'template.html.twig' %}
 
 {% block title %}Typevehicule index{% endblock %}
+{% block nav %}
+    <li class="nav-item">
+        <a href="" class="nav-link">
+            <i class="nav-icon fas fa-copy"></i>
+            <p>
+                Paramètres
+                <i class="fas fa-angle-left right"></i>
+                <span class="badge badge-info right">2</span>
+            </p>
+        </a>
+        <ul class="nav nav-treeview" style="display: block;">
+            <li class="nav-item">
+                <a href="{{ path ('app_vehicule_new') }}" class="nav-link ">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Véhicules</p>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{  path ('app_typevehicule_new')}}" class="nav-link active">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Types Véhicules</p>
+                </a>
+            </li>
 
+
+        </ul>
+    </li>
+{% endblock nav %}
 {% block body %}
+    <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .pagination span {
+            display: inline-block;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+            margin-right: 5px;
+            font-size: 14px;
+        }
+
+        .pagination span.current {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .pagination span.first a,
+        .pagination span.last a,
+        .pagination span.previous a,
+        .pagination span.next a,
+        .pagination span.page a {
+            text-decoration: none;
+            color: #007bff;
+            padding:0 5px;
+        }
+
+        .pagination span.first a:hover,
+        .pagination span.last a:hover,
+        .pagination span.previous a:hover,
+        .pagination span.next a:hover,
+        .pagination span.page a:hover {
+            text-decoration: none;
+            color: red;
+        }
+    </style>
     <h1>Typevehicule index</h1>
 
     <table class="table">
         <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Description</th>
-                <th>actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Description</th>
+            <th>actions</th>
+        </tr>
         </thead>
         <tbody>
-        {% for typevehicule in typevehicules %}
+        {% for typevehicule in pagination %}
             <tr>
                 <td>{{ typevehicule.id }}</td>
                 <td>{{ typevehicule.nom }}</td>
                 <td>{{ typevehicule.description }}</td>
                 <td>
-                    <a href="{{ path('app_typevehicule_show', {'id': typevehicule.id}) }}">show</a>
-                    <a href="{{ path('app_typevehicule_edit', {'id': typevehicule.id}) }}">edit</a>
+                    <a class="btn btn-primary" href="{{ path('app_typevehicule_show', {'id': typevehicule.id}) }}">show</a>
+                    <a class="btn btn-primary" href="{{ path('app_typevehicule_edit', {'id': typevehicule.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
@@ -33,5 +100,10 @@
         </tbody>
     </table>
 
+    <div class="pagination">
+        {{ knp_pagination_render(pagination) }}
+    </div>
+
     <a href="{{ path('app_typevehicule_new') }}">Create new</a>
+
 {% endblock %}

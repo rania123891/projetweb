@@ -9,12 +9,45 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-#[Route('/vehicule')]
 class VehiculeController extends AbstractController
 {
+    #[Route('/ajax-search', name: 'app_vehicule_recherche')]
+    public function chercher(Request $request,VehiculeRepository $entityManager): JsonResponse
+    {
+        $term = $request->query->get('searchValue');
 
-    #[Route('/', name: 'app_vehicule_index', methods: ['GET'])]
+        $queryBuilder = $entityManager->createQueryBuilder('v')
+            ->select('v')
+            ->where('v.immatriculation LIKE :term')
+            ->setParameter('term', '%'.$term.'%');
+
+        $vehicules = $queryBuilder->getQuery()->getResult();
+
+        $response = [];
+        foreach ($vehicules as $vehicule) {
+            $response[] = [
+                'immatriculation' => $vehicule->getImmatriculation(),
+                'marque' => $vehicule->getMarque(),
+                'puissance' => $vehicule->getPuissance(),
+                'nbrdeplace' => $vehicule->getNbrdeplace(),
+                'prix' => $vehicule->getPrix(),
+            ];
+        }
+
+        return $this->json($response);
+    }
+    #[Route('/', name: 'app_c_vehicule_index', methods: ['GET'])]
+    public function client(VehiculeRepository $vehiculeRepository): Response
+    {
+        return $this->render('vehiculeclient/index.html.twig', [
+            'vehicules' => $vehiculeRepository->findAll(),
+        ]);
+    }
+
+
+    #[Route('/vehicule', name: 'app_vehicule_index', methods: ['GET'])]
     public function index(VehiculeRepository $vehiculeRepository): Response
     {
         return $this->render('vehicule/index.html.twig', [
@@ -22,7 +55,8 @@ class VehiculeController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_vehicule_new', methods: ['GET', 'POST'])]
+
+    #[Route('/vehicule/new', name: 'app_vehicule_new', methods: ['GET', 'POST'])]
     public function new(Request $request, VehiculeRepository $vehiculeRepository): Response
     {
         $vehicule = new Vehicule();
@@ -41,7 +75,7 @@ class VehiculeController extends AbstractController
         ]);
     }
 
-    #[Route('/{immatriculation}', name: 'app_vehicule_show', methods: ['GET'])]
+    #[Route('/vehicule/{immatriculation}', name: 'app_vehicule_show', methods: ['GET'])]
     public function show(Vehicule $vehicule): Response
     {
         return $this->render('vehicule/show.html.twig', [
@@ -49,7 +83,15 @@ class VehiculeController extends AbstractController
         ]);
     }
 
-    #[Route('/{immatriculation}/edit', name: 'app_vehicule_edit', methods: ['GET', 'POST'])]
+    #[Route('/{immatriculation}', name: 'app_vehiculeclient_show', methods: ['GET'])]
+    public function showclient(Vehicule $vehicule): Response
+    {
+        return $this->render('vehiculeclient/showclient.html.twig', [
+            'vehicule' => $vehicule,
+        ]);
+    }
+
+    #[Route('/vehicule/{immatriculation}/edit', name: 'app_vehicule_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Vehicule $vehicule, VehiculeRepository $vehiculeRepository): Response
     {
         $form = $this->createForm(VehiculeType::class, $vehicule);
@@ -67,7 +109,7 @@ class VehiculeController extends AbstractController
         ]);
     }
 
-    #[Route('/{immatriculation}', name: 'app_vehicule_delete', methods: ['POST'])]
+    #[Route('/vehicule/{immatriculation}', name: 'app_vehicule_delete', methods: ['POST'])]
     public function delete(Request $request, Vehicule $vehicule, VehiculeRepository $vehiculeRepository): Response
     {
         if ($this->isCsrfTokenValid('delete'.$vehicule->getImmatriculation(), $request->request->get('_token'))) {
@@ -76,4 +118,8 @@ class VehiculeController extends AbstractController
 
         return $this->redirectToRoute('app_vehicule_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
+
 }

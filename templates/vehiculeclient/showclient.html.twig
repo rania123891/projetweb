@@ -1,0 +1,42 @@
+{% extends 'templateclient.html.twig' %}
+
+{% block title %}Vehicule{% endblock %}
+
+{% block body %}
+    <h1>Vehicule</h1>
+
+    <table class="table">
+        <tbody>
+        <tr>
+            <th>Immatriculation</th>
+            <td>{{ vehicule.immatriculation }}</td>
+        </tr>
+        <tr>
+            <th>Marque</th>
+            <td>{{ vehicule.marque }}</td>
+        </tr>
+        <tr>
+            <th>Puissance</th>
+            <td>{{ vehicule.puissance }}</td>
+        </tr>
+        <tr>
+            <th>Kilometrage</th>
+            <td>{{ vehicule.kilometrage }}</td>
+        </tr>
+        <tr>
+            <th>Nbrdeplace</th>
+            <td>{{ vehicule.nbrdeplace }}</td>
+        </tr>
+        <tr>
+            <th>Prix</th>
+            <td>{{ vehicule.prix }}</td>
+        </tr>
+        </tbody>
+    </table>
+    <button> <a href="{{ path('app_vehicule_index') }}">back to list</a></button>
+
+
+
+
+
+{% endblock %}
