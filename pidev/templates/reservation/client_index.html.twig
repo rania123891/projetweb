@@ -1,0 +1,38 @@
+{% extends 'baseFront.html.twig' %}
+{% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <div class="tm-overflow-hidden row" style="width:100%">
+    <div class="tm-gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <center><h3 class="tm-gallery-title">Vos Reservations</h3></center>
+          
+      <div class="row" style="padding:2rem 0 ;display:flex;flex-wrap:wrap;row-gap:2rem;" id="my-data">
+        {% for res in reservations %}
+        <div class="col-lg-4 col-md-6 col-sm-12" style="display:flex; justify-content:center;align-items:center;min-height:200px;;height:200px;">
+          <div class="tm-item-container" style="height:100%">
+            
+            <div class="tm-item-details"  style="display:flex; justify-content:center;align-items:center;">
+              <div class="tm-item-description-container">
+                <p class="tm-item-description">ID: {{res.id}}</p>
+                <p class="tm-item-description">Voiture: {{res.vehicule.immatriculation}}</p>
+                <p class="tm-item-description">Date Res: {{res.dateRes|date('d-m-Y')}}</p>
+                <p class="tm-item-description">Heure: {{res.heureRes|date('H:i')}}</p>
+                <p class="tm-item-description">Duree : {{res.DureeLoc}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+   
+      </div>
+      <hr>
+    </div>
+  </div>
+</section>
+          </div>
+        </div>
+        
+      </div>
+
+   
+  {% endblock %}

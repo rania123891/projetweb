@@ -1,0 +1,142 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Vehicule index{% endblock %}
+
+
+
+
+
+{% block body %}
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <section class="shopping-cart-area ptb-100">
+    <div class="container">
+        <div class ="mb-3" >
+            <a class="btn btn-primary" href="{{ path('app_vehicule_new')}}" >Ajouter Vehicule</a>
+        </div>
+        <div class="input-group mb-3">
+
+            <input type="text" class="form-control" placeholder="Search" id="search-input">
+        </div>
+        <div class="cart-controller">
+            <div class="cart-table table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th scope="col">Agence</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Immatriculation</th>
+                        <th scope="col">Marque</th>
+                        <th scope="col">Puissance</th>
+                        <th scope="col">Nbrdeplace</th>
+                        <th scope="col">Prix</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% set vehicules = [] %}
+                        {% if not is_granted('ROLE_ADMIN') %}
+                            {% for ag in app.user.agences %}
+                                {% for types in ag.typevehicules %}
+                                    {% set vehicules = vehicules|merge(types.vehicules) %}
+                                {% endfor %}
+                            {% endfor %}
+                        {% endif %}
+
+                    {% for vehicule in vehicules  %}
+
+                    <tr>
+                        <td class="trash">
+                            {{ vehicule.typevehicule.agence.nomag}}
+                           </td>
+                           <td class="trash">
+                            {{ vehicule.typevehicule.nom }}
+                           </td>
+                        <td class="trash">
+                         {{ vehicule.immatriculation}}
+                        </td>
+
+                        <td>{{ vehicule.marque }}</td>
+                        <td >
+                            {{ vehicule.puissance}}
+
+                        </td>
+
+                        <td>
+                            {{ vehicule.nbrdeplace }}
+                        </td>
+
+
+                        <td class="product-price">
+                            {{ vehicule.prix }}
+                        </td>
+
+
+
+                        <td>
+
+                            <a class="btn btn-primary" href="{{ path('app_vehicule_show', {'immatriculation': vehicule.immatriculation}) }}">show</a>
+                            <a  class="btn btn-outline-primary" href="{{ path('app_vehicule_edit', {'immatriculation': vehicule.immatriculation}) }}">edit</a>
+                        </td>
+                    </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="4">no records found</td>
+                        </tr>
+                    {% endfor %}
+
+
+
+
+
+                    </tbody>
+                </table>
+            </div>
+            </div>
+    </div>
+</section>
+
+{% endblock %}
+{% block js %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('#search-input').on('input', function() {
+            var searchValue = $(this).val();
+            $.ajax({
+                type: 'GET',
+                url: "{{ path('app_vehicule_recherche') }}",
+                data: {'searchValue': searchValue},
+                success: function(response) {
+                    var tbody = $('tbody');
+                    tbody.empty(); // clear previous results
+                    if (response.length > 0) {
+                        $.each(response, function(i, vehicule) {
+                            var tr = $('<tr>');
+                            tr.append($('<td>').text(vehicule.type));
+                            tr.append($('<td>').text(vehicule.agence));
+                            tr.append($('<td>').text(vehicule.immatriculation));
+                            tr.append($('<td>').text(vehicule.marque));
+                            tr.append($('<td>').text(vehicule.puissance));
+                            tr.append($('<td>').text(vehicule.nbrdeplace));
+                            tr.append($('<td>').text(vehicule.prix));
+                            var actions = $('<td>');
+                            tr.append(actions);
+                            tbody.append(tr);
+                        });
+                    } else {
+                        tbody.append($('<tr>').append($('<td>').attr('colspan', 6).text('no records found')));
+                    }
+                },
+                error: function(response) {
+                    console.log(response);
+                }
+            });
+        });
+    });
+
+</script>
+{% endblock %}

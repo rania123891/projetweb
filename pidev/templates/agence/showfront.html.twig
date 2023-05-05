@@ -1,0 +1,211 @@
+{% extends 'baseFront.html.twig' %}
+{% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+{# <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Vroom Vroom</title>
+  <meta name="description" content="">
+
+<!-- 
+Motor Template
+http://www.templatemo.com/tm-463-motor
+-->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'>
+  <link href="../../Front/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../Front/css/font-awesome.min.css" rel="stylesheet">
+  <link href="../../Front/css/templatemo-style.css" rel="stylesheet">
+
+  <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+      </head>
+      <body>
+        <section class="templatemo-top-section">
+          <div class="templatemo-header">
+            <img class="templatemo-header-img" src="../../Front/img/header.png" alt="Header">
+            <h1 class="templatemo-site-name">Oxidus</h1>
+            <div class="mobile-menu-icon">
+              <i class="fa fa-bars"></i>
+            </div>
+            <div class="templatemo-nav-container">
+              <nav class="templatemo-nav">
+                <ul>
+                 <li><a href="index.html">Propriétaire</a></li>
+                 <li><a href="products.html" class="active">Agences</a></li>
+                 <li><a href="services.html">Véhicules</a></li>
+                 <li><a href="gallery.html">Promotions</a></li>
+                 <li><a href="{{ path('app_user_edit', {'id': app.user.id}) }}">profile</a> </li>
+               </ul>
+             </nav> 
+           </div>
+         </div>
+         <div class="templatemo-welcome">
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-7 col-md-7 col-sm-6 col-xs-12">
+                <img src="../../Front/img/welcome-img.png" class="img-responsive welcome-img" alt="Welcome">
+              </div>
+              <div class="col-lg-5 col-md-5 col-sm-6 col-xs-12">
+                <h2 class="text-uppercase">
+                  <span class="welcome-title-1">Binevenue chez</span>
+                  <span class="welcome-title-2">Vroom Vroom</span>
+                </h2>
+                <p class="welcome-message"> 
+                <span class="blue"></span><span class="green"></span></p>
+                <a href="#" class="welcome-read-more"></a>
+              </div>
+            </div>    
+          </div>
+        </div>
+      </section>
+      <section class="container margin-bottom-50">
+       <div class="row">
+        <h2 class="col-lg-12 text-center text-uppercase margin-bottom-30"></h2>
+        <p class="col-lg-12 text-center margin-bottom-30"></p>
+       
+      </div>
+    </section>     #}
+
+<!-- Main content -->
+
+
+{# <section class="container margin-bottom-50"> #}
+  <div class="tm-overflow-hidden row" style="width:100%">
+    <div class="tm-gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <center><h3 class="tm-gallery-title">Nos Agences</h3></center>
+            <div class="form-group" style=" display:flex;justify-content:center;align-items:center;">
+                    <input  type="text" id="search" class="form-control" style="max-width:80%;" placeholder="Chercher ...">
+            </div>
+      <div class="row" style="padding:2rem 0 ;display:flex;flex-wrap:wrap;row-gap:2rem;" id="my-data">
+        <!-- Loop through agencies and create a new container for each agency -->
+        {% for a in aa %}
+        <div class="col-lg-4 col-md-6 col-sm-12" style="display:flex; justify-content:center;align-items:center;min-height:500px;;height:500px;">
+          <div class="tm-item-container" style="height:100%">
+            <img src="../../Front/img/2.jpg" alt="Image">
+            <div class="tm-item-details">
+              <div class="tm-item-description-container">
+                <p class="tm-item-description">ID: {{a.id}}</p>
+                <p class="tm-item-description">Propriétaire: {{a.user.nom}}</p>
+                <p class="tm-item-description">Nom: {{a.NomAg}}</p>
+                <p class="tm-item-description">Nombre Véhicules: {{a.NombreAg}}</p>
+                <p class="tm-item-description">Réference: {{a.RefAg}}</p>
+                <p class="tm-item-description" style="overflow: hidden;">Email: {{a.EmailAg}}</p>
+                <p class="tm-item-description">Adresse: {{a.AdresseAg}}</p>
+                <p class="tm-item-description">Ville: {{a.VilleAg}}</p>
+              </div>
+            </div>
+            <div><a class="btn btn-primary" href="{{ path('agence_details',{id:a.id }) }}">Voir Vehicules</a></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <hr>
+    </div>
+  </div>
+</section>
+
+
+<script>
+  $(document).ready(function() {
+    $('#search').on('input', function() {
+      console.log('hiii')
+      var query = $(this).val();
+
+      $.ajax({
+        url: "{{ path('search__') }}", 
+        type: "POST",
+        dataType: "json",
+        data: {
+          query: query
+        },
+        success: function(data) {
+          // Replace the gallery HTML with the search results
+          var html = '';
+          for (var i = 0; i < data.length; i++) {
+            html += '<div class="col-lg-4 col-md-6 col-sm-12" style="display:flex; justify-content:center;align-items:center;min-height:500px;;height:500px;">';
+            html += '<div class="tm-item-container" style="height:100%">';
+            html += '<img src="../../Front/img/2.jpg" alt="Image">';
+            html += '<div class="tm-item-details">';
+            html += '<div class="tm-item-description-container">';
+            html += '<p class="tm-item-description">ID: ' + data[i].id + '</p>';
+            html += '<p class="tm-item-description">Nom: ' + data[i].username + '</p>';
+            html += '<p class="tm-item-description">Nom: ' + data[i].NomAg + '</p>';
+            html += '<p class="tm-item-description">Nombre Véhicules: ' + data[i].NombreAg + '</p>';
+            html += '<p class="tm-item-description">Réference: ' + data[i].RefAg + '</p>';
+            html += '<p class="tm-item-description" style="overflow: hidden;">Email: ' + data[i].EmailAg + '</p>';
+            html += '<p class="tm-item-description">Adresse: ' + data[i].AdresseAg + '</p>';
+            html += '<p class="tm-item-description">Ville: ' + data[i].VilleAg + '</p>';
+            html += '</div></div></div></div>';
+          }
+          console.log(html)
+          $('#my-data').html(html);
+        }
+      });
+    });
+  });
+</script>
+
+          
+          
+                     
+          </div>
+        </div>
+        
+      </div>
+
+      <!--banner-->
+ 
+    {# </section> <!-- Main content --> #}
+    <!--Footer content-->
+    {# <footer class="tm-footer">
+      <div class="container">
+        <div class="row margin-bottom-60">
+          <nav class="col-lg-3 col-md-3 tm-footer-nav tm-footer-div">
+            <h3 class="tm-footer-div-title">Main Menu</h3>
+            <ul>
+              <li><a href="index.html">Home</a></li>
+              <li><a href="about.html">About Us</a></li>
+              <li><a href="gallery.html">Directory</a></li>
+              <li><a href="#">Blog</a></li>
+              <li><a href="services.html">Our Services</a></li>
+            </ul>
+          </nav>
+          <div class="col-lg-5 col-md-5 tm-footer-div">
+            <h3 class="tm-footer-div-title">About Us</h3>
+            <p class="margin-top-15">Vroom Vroom</p>
+            <p class="margin-top-15">Vroom Vroom</p>
+          </div>
+          <div class="col-lg-4 col-md-4 tm-footer-div">
+            <h3 class="tm-footer-div-title">Get Social</h3>
+            <p>Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante.</p>
+            <div class="tm-social-icons-container">
+              <a href="#" class="tm-social-icon"><i class="fa fa-facebook"></i></a>
+              <a href="#" class="tm-social-icon"><i class="fa fa-twitter"></i></a>
+              <a href="#" class="tm-social-icon"><i class="fa fa-linkedin"></i></a>
+              <a href="#" class="tm-social-icon"><i class="fa fa-youtube"></i></a>
+              <a href="#" class="tm-social-icon"><i class="fa fa-behance"></i></a>
+            </div>
+          </div>
+        </div>
+        <div class="row tm-copyright">
+          <p class="col-lg-12 small copyright-text text-center">Copyright &copy; 2084 Vroom Vroom</p>
+        </div>
+      </div>
+    </footer> <!-- Footer content-->
+    
+    <!-- JS -->
+    <script type="text/javascript" src="../../Front/js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+    <script type="text/javascript" src="../../Front/js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+
+  </body>
+  </html> #}
+  {% endblock %}

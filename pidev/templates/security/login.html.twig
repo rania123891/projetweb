@@ -1,0 +1,45 @@
+
+
+{% extends 'baseloginregister.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+
+
+{% block login %}
+    <form method="post">
+        {% if error %}
+            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        {% if app.user %}
+            <div class="mb-3">
+                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+            </div>
+        {% endif %}
+
+        <div class="input-boxes">
+            <div class="input-box">
+                <i class="fas fa-envelope"></i>
+                <input type="text" value="{{ last_username }}"  name="email" id="inputEmail" placeholder="Enter your email" >
+            </div>
+            <div class="input-box">
+                <i class="fas fa-lock"></i>
+                <input type="password" name="password" id="inputPassword" placeholder="Enter your password" >
+            </div>
+            <div class="text"><a href="{{ path('user_forgot_password') }}">Forgot password?</a></div>
+            <div class="text"><a href="{{ path('send_sms') }}">Reclamation Par SMS</a></div>
+
+            <div class="button input-box">
+                
+                <input type="hidden" name="_csrf_token"
+                       value="{{ csrf_token('authenticate') }}"
+                >
+                <div class="button input-box">
+                    <input type="submit" value="submit" >
+                </div>
+            </div>
+            <div class="text sign-up-text">Don't have an account? <a href="{{ path('app_register') }}">Sigup now</a></div>
+        </div>
+    </form>
+{% endblock %}

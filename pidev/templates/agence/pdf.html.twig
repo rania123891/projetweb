@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Agence PDF</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        
+        th, td {
+            text-align: left;
+            padding: 8px;
+        }
+        
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        
+        tr:nth-child(even) {background-color: #f2f2f2;}
+        
+        .center {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Agence PDF</h1>
+    <table>
+        <tr>
+            <th>#</th>
+            <th>Nom</th>
+            <th>Nombre</th>
+            <th>Ref</th>
+            <th>Email</th>
+            <th>Adresse</th>
+            <th>Ville</th>
+        </tr>
+        <tr>
+            <td>{{ agence.id }}</td>
+            <td>{{ agence.NomAg }}</td>
+            <td>{{ agence.NombreAg }}</td>
+            <td>{{ agence.RefAg }}</td>
+            <td>{{ agence.EmailAg }}</td>
+            <td>{{ agence.AdresseAg }}</td>
+            <td>{{ agence.VilleAg }}</td>
+        </tr>
+    </table>
+</body>
+</html>

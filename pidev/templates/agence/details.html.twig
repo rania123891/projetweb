@@ -1,0 +1,42 @@
+{% extends 'baseFront.html.twig' %}
+{% block body %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+  <div class="tm-overflow-hidden row" style="width:100%">
+    <div class="tm-gallery col-lg-12 col-md-12 col-sm-12 col-xs-12">
+      <center><h3 class="tm-gallery-title">Agence {{agence.nomAg }} Details</h3></center>
+           
+      <div class="row" style="padding:2rem 0 ;display:flex;flex-wrap:wrap;row-gap:2rem;" id="my-data">
+        {% for type in agence.typevehicules %}
+        {% for vehicule in type.vehicules %}
+        <div class="col-lg-4 col-md-6 col-sm-12" style="display:flex; justify-content:center;align-items:center;min-height:400px;;height:400px;">
+          <div class="tm-item-container" style="height:100%">
+            <img src="../../Front/img/2.jpg" alt="Image">
+            <div class="tm-item-details">
+              <div class="tm-item-description-container">
+                <p class="tm-item-description">Immatriculation: {{vehicule.immatriculation}}</p>
+                <p class="tm-item-description">Marque: {{vehicule.marque}}</p>
+                <p class="tm-item-description">Puissance: {{vehicule.puissance}}</p>
+                <p class="tm-item-description">KiloMetrage: {{vehicule.kilometrage}}</p>
+                <p class="tm-item-description">Places : {{vehicule.nbrdeplace}}</p>
+                <p class="tm-item-description">Prix: {{vehicule.prix}}</p>
+              </div>
+            </div>
+            <div><a class="btn btn-primary" href="{{ path('newres',{immatriculation:vehicule.immatriculation })}}" >Reserver</a></div>
+          </div>
+        </div>
+        {% endfor %}
+        {% endfor %}
+   
+      </div>
+      <hr>
+    </div>
+  </div>
+</section>
+          </div>
+        </div>
+        
+      </div>
+
+   
+  {% endblock %}

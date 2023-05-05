@@ -1,0 +1,61 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}reservation{% endblock %}
+
+{% block body %}
+
+
+  <body id="reportsPage">
+    <div class="" id="home">
+      <center>
+      <div class="container mt-5">
+        
+       
+        <!-- row -->
+        <div class="row tm-content-row">
+          <div class="tm-block-col tm-col-avatar">
+            
+          </div>
+          <div class=" container">
+            <div class="tm-bg-primary-dark tm-block tm-block-settings">
+              <h2 class="tm-block-title">Ajouter Reservation</h2>
+                  {{ form_start(form,{'attr':{'novalidate':'novalidate'}}) }}
+                <div class="form-group col-lg-6">
+
+                  <label for="name">Date</label>
+                   {{ form_widget(form.DateRes , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Message'}} ) }}
+                                      <lable     style="color: red"       {{ form_errors(form.DateRes) }}</label>
+                    <label for="name">Heure</label>
+                   {{ form_widget(form.HeureRes , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Message'}} ) }}
+                                      <lable     style="color: red"       {{ form_errors(form.HeureRes) }}</label>
+                    <label for="name">Methode </label>
+                   {{ form_widget(form.MethodP, {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Message'}} ) }}
+                                      <lable     style="color: red"       {{ form_errors(form.MethodP) }}</label>
+                    <label for="name">Duree</label>
+                   {{ form_widget(form.DureeLoc , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Message'}} ) }}
+                                      <lable     style="color: red"       {{ form_errors(form.DureeLoc) }}</label>
+                    <label for="name">Nom</label>
+                   {{ form_widget(form.NomLoc , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Message'}} ) }}
+                                      <lable     style="color: red"       {{ form_errors(form.NomLoc) }}</label>
+                    <label for="name">Cin</label>
+                   {{ form_widget(form.CinLoc , {'attr': {'class': 'form-control form-control-user' , 'placeholder' : 'Message'}} ) }}
+                                      <lable     style="color: red"       {{ form_errors(form.CinLoc) }}</label>
+               
+                
+               
+              <br>
+                  {{ form_widget(form)}}   
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </center>
+    </div>
+
+    <script src="../../Back/js/jquery-3.3.1.min.js"></script>
+    <!-- https://jquery.com/download/ -->
+    <script src="../../Back/js/bootstrap.min.js"></script>
+    <!-- https://getbootstrap.com/ -->
+  </body>
+  {% endblock %}

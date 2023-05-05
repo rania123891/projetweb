@@ -1,0 +1,58 @@
+{% extends 'baseFront.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block body %}
+
+    <img src="{{ asset('Upload/')}}{{ user.photo }}" width="50%"     />
+
+
+    {{ form_start(form) }}
+
+    <div id="google_translate_element"></div>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+        }
+    </script>
+
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    <div style="text-align: center !important;">
+        <div class="input-box">
+            {{ form_widget(form.email, { 'attr': {'class':'form-control','placeholder': 'Enter your email'}}) }}
+            {{ form_errors(form.email ) }}
+        </div>
+        <div class="input-box">
+            {{ form_widget(form.nom, { 'attr': {'class':'form-control','placeholder': 'Enter your name'}}) }}
+            {{ form_errors(form.nom ) }}
+        </div>
+        <div class="input-box">
+            {{ form_widget(form.prenom, { 'attr': {'class':'form-control','placeholder': 'Enter your lastname'}}) }}
+            {{ form_errors(form.prenom ) }}
+        </div>
+
+        <div class="input-box">
+            {{ form_widget(form.adresse, { 'attr': {'class':'form-control','placeholder': 'Enter your adresse'}}) }}
+            {{ form_errors(form.adresse ) }}
+        </div>
+        <div class="input-box">
+            {{ form_widget(form.description, { 'attr': {'class':'form-control','placeholder': 'Enter your Description'}}) }}
+            {{ form_errors(form.description ) }}
+        </div>
+        <div class="input-box">
+            {{ form_widget(form.file, { 'attr': {'class':'form-control','placeholder': 'Enter your adresse'}}) }}
+            {{ form_errors(form.file ) }}
+        </div>
+        <div class="input-box">
+            {{ form_widget(form.numTel, { 'attr': {'class':'form-control','placeholder': 'Enter your Number'}}) }}
+            {{ form_errors(form.numTel ) }}
+        </div>
+
+        <div class="button input-box">
+            <input type="submit" value="submit" >
+        </div>
+    </div>
+
+    {{ form_end(form) }}
+{% endblock %}

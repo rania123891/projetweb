@@ -1,0 +1,13 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}Edit Typevehicule{% endblock %}
+
+{% block body %}
+    <h1>Edit Typevehicule</h1>
+
+    {{ include('typevehicule/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_typevehicule_index') }}">back to list</a>
+
+    {{ include('typevehicule/_delete_form.html.twig') }}
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'baseBack.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+
+
+    <input  id="myInput"  type="text" placeholder="search">
+
+{% if users.getTotalItemCount > 0 %}
+
+    <table class="table">
+        <thead>
+        <tr>
+
+            <th>Email</th>
+            <th>Nom</th>
+            <th>Prenom</th>
+            <th>Description</th>
+            <th>Adresse</th>
+            <th>Numéro Téléphone</th>
+            <th>Image</th>
+
+            <th>actions</th>
+            <th>Afficher</th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="myTable">
+        {% for user in users %}
+            <tr>
+
+                <td>{{ user.email }}</td>
+                <td>{{ user.nom }}</td>
+                <td>{{ user.prenom }}</td>
+                <td>{{ user.description }}</td>
+                <td>{{ user.adresse }}</td>
+                <td>{{ user.numtel }}</td>
+                <td><img src="{{ asset('Upload/')}}{{ user.photo }}" width="100" class="img-circle" /></td>
+                
+
+                <td>
+                    <a class="btn btn-danger" href="{{ path('delete', {'id': user.id}) }}">Block</a>
+                </td>
+                <td>
+                    <a class="btn btn-primary" href="{{path('app_user_show',{id:user.id})}}">Afficher</a>
+                </td>
+                <td>             <a href="{{ path('pdfuser',{'id': user.id}) }}">  <img   width="30" src="https://cdn-icons-png.flaticon.com/512/337/337946.png">  </a>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+
+        
+
+        <div id="google_translate_element"></div>
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+            }
+        </script>
+
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+        </tbody>
+        <tbody id="search">
+        </tbody>
+    </table>
+    
+    <div class="pagination">
+        {{ knp_pagination_render(users) }}
+
+        <p>Page {{ users.getCurrentPageNumber }} of {{ users.getTotalItemCount }}</p>
+        
+    </div>{% endif %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function(){
+            $("#myInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#myTable tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+    <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+          }
+          
+          .pagination a,
+          .pagination span {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            color: #333;
+            text-decoration: none;
+            cursor: pointer;
+          }
+          
+          .pagination a:hover,
+          .pagination span.current {
+            background-color: #333;
+            color: #fff;
+          }
+          
+          .pagination .dots {
+            margin: 0 5px;
+          }
+          
+          .pagination .disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+          }
+          
+    </style>
+
+{% endblock %}

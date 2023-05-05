@@ -1,0 +1,21 @@
+{% extends 'baseloginregister.html.twig' %}
+
+{% block title %}SMS Reclamation!{% endblock %}
+
+{% block login %}
+<div class="mb-3">
+	<h1>SMS Reclamation</h1>
+</div>
+	<form method="post" action="{{ path('send_sms') }}">
+		<div class="input-box">
+			<label for="numberField">Numéro de téléphone</label>
+			<input type="tel" class="form-control" id="numberField" name="numberField" placeholder="Entrez le numéro de téléphone" required>
+	</div>
+		
+		<div class="input-box" style="gap:2rem">
+			<label for="messageField">Message</label>
+			<textarea style="width:100%" class="form-control" id="messageField" name="messageField"  placeholder="Entrez le message" required></textarea>
+		</div>
+		<button type="submit" class="btn btn-primary">Envoyer</button>
+	</form>
+{% endblock %}

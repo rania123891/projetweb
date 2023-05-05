@@ -1,0 +1,88 @@
+{% extends 'baseloginregister.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+
+
+{% block login %}
+
+    {{ form_start(registrationForm) }}
+    <div class="input-boxes">
+        <div class="input-box">
+            <i class="fas fa-user"></i>
+            {{ form_widget(registrationForm.email, { 'attr': {'placeholder': 'Enter your email'}}) }}
+        </div>
+        {{ form_errors(registrationForm.email ) }}
+
+        <div class="input-box">
+            <i class="fas fa-envelope"></i>
+            {{ form_widget(registrationForm.nom, { 'attr': {'placeholder': 'Enter your name'}}) }}
+        </div>
+        {{ form_errors(registrationForm.nom ) }}
+
+        <div class="input-box">
+            <i class="fas fa-person-booth"></i>
+            {{ form_widget(registrationForm.prenom, { 'attr': {'placeholder': 'Enter your lastname'}}) }}
+        </div>
+        {{ form_errors(registrationForm.prenom ) }}
+
+        <div class="input-box">
+            <i class="fas fa-lock"></i>
+            {{ form_widget(registrationForm.plainPassword, { 'attr': {'placeholder': 'Enter your Password'}}) }}
+        </div>
+        {{ form_errors(registrationForm.plainPassword ) }}
+
+        <div class="input-box">
+            <i class="fas fa-address-card"></i>
+            {{ form_widget(registrationForm.adresse, { 'attr': {'placeholder': 'Enter your adresse'}}) }}
+        </div>
+        {{ form_errors(registrationForm.adresse ) }}
+
+        <div class="input-box">
+            <i class="fas fa-address-card"></i>
+            {{ form_widget(registrationForm.description, { 'attr': {'placeholder': 'Enter your Description'}}) }}
+        </div>
+        {{ form_errors(registrationForm.description ) }}
+
+        <div class="input-box">
+            <i class="fas fa-address-card"></i>
+            {{ form_widget(registrationForm.file, { 'attr': {'placeholder': 'Enter your adresse'}}) }}
+        </div>
+        {{ form_errors(registrationForm.file ) }}
+
+        <div class="input-box">
+            <i class="fas fa-phone"></i>
+            {{ form_widget(registrationForm.numTel, { 'attr': {'placeholder': 'Enter your Number'}}) }}
+        </div>
+        {{ form_errors(registrationForm.numTel ) }}
+
+        <div class="input-box">
+            {{ form_widget(registrationForm.roles) }}
+        </div>
+        {{ form_errors(registrationForm.roles ) }}
+
+        <div class="button input-box">
+            <input type="submit" value="submit" formnovalidate>
+        </div>
+        <div class="text sign-up-text">Already have an account? <a href="{{ path('app_login') }}">Login now</a></div>
+    </div>
+    <div id="google_translate_element"></div>
+                                    <script type="text/javascript">
+                                        function googleTranslateElementInit() {
+                                            new google.translate.TranslateElement({pageLanguage: 'en'}, 'google_translate_element');
+                                        }
+                                    </script>
+
+                                    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    {{ form_end(registrationForm) }}
+{% endblock %}
+
+
+
+
+
+
+
+
+
